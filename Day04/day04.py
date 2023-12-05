@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-import numpy as np
-import pandas as pd
-import re
-
 with open('input.txt') as f:
 	lines = f.readlines()
 
@@ -47,10 +43,6 @@ for line in lines:
 	n, cnt = parse2(line)
 	list_wins.append([1 , n, cnt])
  
-print(len(list_wins))
-print(list_wins[1][0])
-
-print(list_wins[2][0])
 
 counter = 0
 for i in range(len(list_wins)):
@@ -59,41 +51,3 @@ for i in range(len(list_wins)):
 		list_wins[j][0] += list_wins[i][0]
 
 print(counter)
-
-# dict_cards = {}
-
-# # initialize cards counting dictionary
-# for i in range(1, len(lines)):
-# 	dict_cards[i] = 0
-
-# def recurscard(ind):
-# 	n, cnt = parse2(lines[ind])
-
-# 	i = 0
-# 	if cnt == 0:
-# 		return 0
-# 	for i in range(1, cnt):
-# 		if n + i > len(lines) - 1:
-# 			return 1
-# 		else:
-# 			return recurscard(n + i)
-
-# counter = 0
-# for i in range(len(lines) - 2):
-# 	counter += recurscard(i)
-
-# print(counter)
-
-# tickets = [[1]+[nums.split() for nums in line[9:].split(" | ")] for line in lines]
-# print(tickets)
-# sumTickets = 0
-# for i in range( len(tickets) ):
-# 	wins = 0
-# 	sumTickets += tickets[i][0]
-# 	for win_num in tickets[i][1]:
-# 		if win_num in tickets[i][2]:
-# 			wins += 1
-# 	for j in range(i+1, i+wins+1):
-# 		tickets[j][0] += tickets[i][0]    
-
-# print(sumTickets)
