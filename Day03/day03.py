@@ -6,59 +6,55 @@ import re
 with open('input.txt') as f:
 	lines = f.readlines()
 
-print(lines[0])
 
 leny = len(lines)
 lenx = len(lines[0])
-print(leny, lenx)
 
-listmat_nb = []
+nbmat = []
 symbmat = []
-# symbols = '[@_!#$%^&*()<>?/\|}{~:]-+='
-special_char = "{[!@#$%\^&*()-+?_=,<>\|/\"]}"
-# special_char = "{[@#$%^&*()-+?_=,<>\|]}"
-# special_char = re.compile('{[\!@#$%^&*()-+?_=,<>|/"]}') 
-# regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]') 
-regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
-text = "........*...48@.662.100...............590...*........#.566.....................15..../426.............774...............+...........*......."
-# print(regex.search(text))
 
 
-for i in range(leny - 1):
+for i in range(leny):
 	numbers = re.findall('[0-9]+', lines[i])
-	listmat_nb.append([])
-	test = "........*...48@.662.100...............590...*........#.566.....................15..../426.............774...............+...........*......."
-	for s in special_char:
-		# print(s)
-		# sym = re.findall(s, test)
-		sym = test.find(s)
-		# print(sym)
-		
-	# symbols = re.findall(special_char, lines[i])
-	# symbmat.append([])
-	# print(symbols)
-	# print(regex.search(lines[i+1]))
+	nbmat.append([])
+	# test = "........*...48@.662.100...............590...*........#.566.....................15..../426.............774...............+...........*......."
+
+	# get numbers indexes
 	for n in numbers:
-		listmat_nb[i].extend([{m.start(): n} for m in re.finditer(n, lines[i])])
-	print(numbers)
+		nbmat[i].extend([{m.start(): n} for m in re.finditer(n, lines[i])])
 	dict_str = {}
-	for j in listmat_nb[i]:
+	for j in nbmat[i]:
 		dict_str |= j
-	listmat_nb[i] = [dict_str]
-	print(listmat_nb[i])
+	nbmat[i] = [dict_str]
 
-	# for n in symbols:
 
-	# 	symbmat[i].extend([{m.start(): n} for m in re.finditer(n, lines[i])])
-	# print(symbmat)
+	# find special characters indexes
+	symbdict = {}
+	k = 0
+	for j in lines[i]:
+		if j.isdigit() or j == '.' or j == '\n':
+			k += 1
+			continue
+		symbdict[k] = j
+		k += 1
+	symbmat.append([symbdict])
 
-	if i < leny - 1: # check line above
-		# {m.start(0):int(m.group(0)) for m in re.finditer("\d+", strs)}
+
+
+
+	# i += 1
+	# if i == 2: break
+print(nbmat)
+print(symbmat)
+
+for i in range(leny):
+	# check current line
+	
+	# check line above
+	if i < leny - 1: 
+		
 		pass
 
-	if i > 0:		# check line below
+	# check line below
+	if i > 0:		
 		pass
-
-
-	i += 1
-	break
