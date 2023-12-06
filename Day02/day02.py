@@ -24,25 +24,27 @@ def parse(s):
 with open('input.txt') as f:
 	lines = f.readlines()
 
+# Part 1
+
+dicolors = {"red": 12, "green": 13, "blue": 14}
 final = 0
 for line in lines:
-	bad = 0
 	game, dicolor = parse(line)
 	colors = list(dicolor.keys())
-	dicolors = {"red": 12, "green": 13, "blue": 14}
+	bad = 0
 	for c in colors:
-		if dicolor[c] > dicolors[c]:
-			bad = 1
-			break
+		if dicolor[c] > dicolors[c]: bad = 1; break
+	# for c in colors: bad = 1 if dicolor[c] > dicolors[c] else 0
 	if bad == 0:
 		final += game
 
-
 print(final)
+
+
+# Part 2
 
 final2 = 0
 for line in lines:
-	bad = 0
 	game, dicolor = parse(line)
 	colors = list(dicolor.keys())
 	final2 += dicolor[colors[0]] * dicolor[colors[1]] * dicolor[colors[2]]
