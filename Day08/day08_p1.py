@@ -44,4 +44,4 @@ while next != end:
 	cnt += c
 	print(cnt, next)
 
-print(cnt)
+print("total steps count: ", cnt)

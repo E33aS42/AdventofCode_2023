@@ -51,5 +51,5 @@ for st in start:
 		# print(cnt, next)
 
 	cnt_list[next] = cnt
-print(*cnt_list.values())
-print(math.lcm(*cnt_list.values()))
+print("total steps counts for each ending: ", cnt_list)
+print("global steps count: ", math.lcm(*cnt_list.values()))
