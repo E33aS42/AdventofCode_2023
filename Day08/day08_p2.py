@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import re
 import math
 
 content = open("input.txt").read().strip().split("\n\n")
@@ -19,59 +18,38 @@ end = [w for w in sequences.keys() if w.endswith('Z')]
 
 # print(start, end)
 
+def directions(d, k):
+	try:
+		assert d in "LR", "unknown instruction"
+		assert k in sequences.keys(), "unknown direction"
+		if d == 'L':
+			return sequences[k][0]
+		elif d == 'R':
+			return sequences[k][1]
+	except AssertionError as e:
+		print(e)
+		exit()
 
-def check_end(next):
-	end = [w for w in next if w.endswith('Z')]
-	# print(f'end = {end}')
-	if len(end) == len(next):
-		return 1
-	return 0
-
-def get_next(next, cnt, k, i):
-	new = []
-	# print(f"i, cnt={cnt}, next={next}")
-	for n in next:
-		if n.endswith('Z') and cnt[n] == 0:
-			cnt[n] = i
-			new.append(n)
-		elif n.endswith('Z') and cnt[n]:
-			new.append(n)
-		else:
-			# print("seq: ", sequences[n][k])
-			new.append(sequences[n][k])
-	return cnt, new
-
-def loop(cnt, n, j):
-	next = n
+def loop(b):
+	next = b
 	i = 0
-	while not check_end(next) and i < len(instructions):
-		for inst in instructions:
-			# print(f'j={j}')
+	while next != end and i < len(instructions):
+		for j in instructions:
+			next = directions(j, next)
 			i += 1
-			if inst == 'L':
-				cnt, next = get_next(next, cnt, 0, i + j)
-			elif inst == 'R':
-				cnt, next = get_next(next, cnt, 1, i + j)
-	
+	return i, next
 
-	return cnt, next
+cnt_list = {}
 
-zero = [0 for _ in range(len(end))]
-cnt = dict(zip(end, zero))
-# print(cnt)
+for st in start:
+	cnt = 0
 
-next = start
-j = 0
+	next = st
+	while next not in end:
+		c, next = loop(next)
+		cnt += c
+		# print(cnt, next)
 
-# print(check_end(end))
-while not check_end(next):
-# 	print(f"j={j}")
-	# print(f"j, cnt={cnt}, next={next}")
-	cnt, next = loop(cnt, next, j)
-
-	print(cnt, next)
-	j += 1
-	# if j == 2: break
-
-print(*cnt.values())
-print(math.lcm(*cnt.values()))
+	cnt_list[next] = cnt
+print(*cnt_list.values())
+print(math.lcm(*cnt_list.values()))
