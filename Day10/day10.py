@@ -19,7 +19,7 @@ S is the starting position of the animal; there is a pipe on this tile, but your
 with open('input.txt') as f:
 	lines = f.readlines()
 
-with open('ex2') as f:
+with open('ex') as f:
 	lines = f.readlines()
 
 print(len(lines))
@@ -37,16 +37,6 @@ def p_vert(p, ip, iv):
 	ip: index of coming input pipe
 	iv: index of vertical pipe
 	"""
-	# check if pipes can connect together:
-	# if p == '-':
-	# 	return -1
-	# elif (ip[0] == iv[0] - 1 and ip[1] == iv[1]) and (p == '7' or p == 'F' or p == '|'):
-	# 	return [iv[0] + 1, iv[1]]
-	# elif (ip[0] == iv[0] + 1 and ip[1] == iv[1]) and (p == 'J' or p == 'L' or p == '|'):
-	# 	return [iv[0] - 1, iv[1]]
-	# else:
-	# 	return -1
-	
 	if (ip[0] == iv[0] - 1 and ip[1] == iv[1]):
 		return [iv[0] + 1, iv[1]]
 	elif (ip[0] == iv[0] + 1 and ip[1] == iv[1]):
@@ -60,16 +50,6 @@ def p_horiz(p, ip, iv):
 	ip: index of coming input pipe
 	iv: index of vertical pipe
 	"""
-	# check if pipes can connect together:
-	# if p == '|':
-	# 	return -1
-	# elif (ip[0] == iv[0] and ip[1] == iv[1] + 1) and (p == '7' or p == 'J' or p == '-'):
-	# 	return [iv[0], iv[1] - 1]
-	# elif (ip[0] == iv[0] and ip[1] == iv[1] - 1) and (p == 'F' or p == 'L' or p == '-'):
-	# 	return [iv[0], iv[1] + 1]
-	# else:
-	# 	return -1
-
 	if (ip[0] == iv[0] and ip[1] == iv[1] + 1):
 		return [iv[0], iv[1] - 1]
 	elif (ip[0] == iv[0] and ip[1] == iv[1] - 1):
@@ -109,6 +89,18 @@ def pF(ip, iv):
 	else:
 		return -1
 	
-def pstart(st):
+def pstart(s):
 	next = []
-	
+	if lines[s[0] - 1][s[1]] in {'7', 'F', '|'}:
+		next += [lines[s[0] - 1][s[1]]]
+	if lines[s[0] + 1][s[1]] in {'J', 'L', '|'}:
+		next += lines[s[0] + 1][s[1]]
+	if lines[s[0]][s[1] - 1] in {'L', 'F', '-'}:
+		next += lines[s[0]][s[1] - 1]
+	if lines[s[0]][s[1] + 1] in {'J', '7', '-'}:
+		next += lines[s[0]][s[1] + 1] 
+	return next
+
+
+start_tiles = pstart(start)
+
